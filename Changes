@@ -1,4 +1,7 @@
 Revision history for Tree::Suffix
 
-0.01  Sun Feb 19 06:01:11 2006
+0.02  Sat Feb 25 18:45:09 GMT 2006
+    - insert() now returns the count of successfully inserted strings.
+
+0.01  Sun Feb 19 06:01:11 GMT 2006
     - Initial distribution.

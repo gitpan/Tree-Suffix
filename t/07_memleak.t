@@ -3,7 +3,7 @@ use Test::More;
 use Tree::Suffix;
 
 plan skip_all => 'For development only';
-#plan test => 2;
+#plan tests => 3;
 
 sub mem
 {
@@ -29,9 +29,24 @@ sub mem
   my $start = mem;
   for (my $i=0; $i<200; $i++)
   {
-    $tree = Tree::Suffix->new();
+    $tree->clear;
     $tree->insert('aa'..'gg');
   }
   my $end = mem;
   ok($end - $start < 1_000, 'insert()');
+  diag("\nMemory: $start -> $end");
+}
+
+{
+  my $tree = Tree::Suffix->new();
+  $tree->insert('aa'..'gg');
+  my $start = mem;
+  for (my $i=0; $i<200; $i++)
+  {
+    $tree = Tree::Suffix->new();
+    $tree->insert('aa'..'gg');
+  }
+  my $end = mem;
+  ok($end - $start < 1_000, 'new()/insert()');
+  diag("\nMemory: $start -> $end");
 }

@@ -25,17 +25,13 @@ new (class, ...)
   PROTOTYPE: $;@
   PREINIT:
     LST_STree *tree;
-    LST_String *string;
-    STRLEN len;
-    char *str;
     IV i;
   CODE:
     tree = lst_stree_new(NULL);
-    for (i = 1; i < items; i++) {
-      str = (char *)SvPV(ST(i), len);
-      string = lst_string_new(str, 1, len);
-      lst_stree_add_string(tree, string);
-    }
+    if (! tree)
+      XSRETURN_UNDEF;
+    for (i = 1; i < items; i++)
+      lst_stree_add_string(tree, lst_string_new(SvPVX(ST(i)), 1, SvCUR(ST(i))));
     RETVAL = sv_setref_pv(newSViv(0), class, (void *)tree);
     OUTPUT:
       RETVAL
@@ -70,21 +66,15 @@ insert (self, ...)
   PROTOTYPE: $@
   PREINIT:
     LST_STree *tree;
-    LST_String *string;
-    STRLEN len;
-    char *str;
-    IV i;
+    IV i, pre;
   CODE:
+    if (items == 1)
+      XSRETURN_IV(0);
     tree = SV2TREE(self);
-    for (i = 1; i < items; i++) {
-      str = (char *)SvPV(ST(i), len);
-      string = lst_string_new(str, 1, len);
-      lst_stree_add_string(tree, string);
-    }
-    /* lst_stree_add_string doesn't indicate success, so can't determine
-     * count
-     */
-    XSRETURN_IV(items-1);
+    pre = tree->num_strings;
+    for (i = 1; i < items; i++)
+      lst_stree_add_string(tree, lst_string_new(SvPVX(ST(i)), 1, SvCUR(ST(i))));
+    XSRETURN_IV(tree->num_strings - pre);
 
 
 IV
@@ -134,8 +124,8 @@ dump (self)
     IV fn;
   CODE:
     tree = SV2TREE(self);
-    fn = redirect_stderr();    
     /* Redirect from stderr to stdout */
+    fn = redirect_stderr();    
     lst_debug_print_tree(tree);
     restore_stderr(fn);
 
@@ -150,13 +140,12 @@ remove (self, ...)
     LST_StringHashItem *hi;
     LST_String *string;
     STRLEN len;
-    char *str;
     IV i, j, k, done = 0;
   CODE:
     tree = SV2TREE(self);
     for (i = 1; i < items; i++) {
-      str = (char *)SvPV(ST(i), len);
-      string = lst_string_new(str, 1, len);
+      len = SvCUR(ST(i));
+      string = lst_string_new(SvPVX(ST(i)), 1, len);
       /* Check each hash bucket for the string.  Is there an easier way? */
       for (j = 0; j < LST_STRING_HASH_SIZE; j++) {
         hash = &tree->string_hash[j];
@@ -172,6 +161,7 @@ remove (self, ...)
         }
       }
       next_item: 1;
+      lst_string_free(string);
     }
     XSRETURN_IV(done);
 

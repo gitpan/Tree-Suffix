@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION @ISA);
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
@@ -72,7 +72,7 @@ Remove the list of strings from the tree.
 
 =item $tree->lcs($min_len, $max_len)
 
-=item $tree->longest_common_substrings;
+=item $tree->longest_common_substrings
 
 Returns a list of the longest common substrings. The minimum and maximum
 length of the considered substrings may also be specified.
@@ -81,7 +81,7 @@ length of the considered substrings may also be specified.
 
 =item $tree->lrs($min_len, $max_len)
 
-=item $tree->longest_repeated_substrings;
+=item $tree->longest_repeated_substrings
 
 Returns a list of the longest repeated substrings. The minimum and maximum
 length of the considered substrings may also be specified.
@@ -126,10 +126,7 @@ L<SuffixTree>
 
 L<http://en.wikipedia.org/wiki/Suffix_tree>
 
-=head1 BUGS AND REQUESTS
-
-There appears to be a memory leak somewhere.  It is currently being 
-investigated.
+=head1 REQUESTS AND BUGS
 
 Please report any bugs or feature requests to C<bug-tree-suffix at 
 rt.cpan.org>, or through the web interface at 
