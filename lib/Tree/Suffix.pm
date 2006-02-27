@@ -1,9 +1,9 @@
 package Tree::Suffix;
 
 use strict;
-use vars qw($VERSION @ISA);
+use vars qw($VERSION);
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
@@ -62,9 +62,10 @@ of strings to be inserted into the tree.
 
 =item $tree->insert(@strings)
 
-Inserts the list of strings into the tree.
+Inserts the list of strings into the tree.  Returns the number of 
+successfully added strings.
 
-=item $tree->remove(@strings);
+=item $tree->remove(@strings)
 
 Remove the list of strings from the tree.
 
