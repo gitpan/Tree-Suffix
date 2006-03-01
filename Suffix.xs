@@ -181,11 +181,8 @@ _algorithm_longest_substrings (self, min_len=0, max_len=0)
     LST_String *str;
   PPCODE:
     tree = SV2TREE(self);
-    if (ix == 1) {
+    if (ix == 1)
       res = lst_alg_longest_common_substring(tree, min_len, max_len);
-      /* this allows lcs to be called again even if the tree hasn't changed */
-      tree->needs_visitor_update = 1;
-    }
     else
       res = lst_alg_longest_repeated_substring(tree, min_len, max_len);
     if (res) {

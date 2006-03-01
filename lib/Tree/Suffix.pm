@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
@@ -127,6 +127,11 @@ L<SuffixTree>
 
 L<http://en.wikipedia.org/wiki/Suffix_tree>
 
+=head1 NOTES
+
+A memory leak will be exhibited if you are using a version of libstree < 
+.4.2.
+
 =head1 REQUESTS AND BUGS
 
 Please report any bugs or feature requests to C<bug-tree-suffix at 
@@ -167,7 +172,7 @@ L<http://search.cpan.org/dist/Tree-Suffix>
 
 Copyright (C) 2006 gray <gray at cpan.org>, all rights reserved.
 
-Copyright (C) 2003 Christian Kreibich <christian@whoop.org>
+Copyright (C) 2003-2006 Christian Kreibich <christian@whoop.org>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

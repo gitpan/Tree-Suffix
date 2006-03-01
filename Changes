@@ -1,7 +1,11 @@
 Revision history for Tree::Suffix
 
+0.04 Wed Mar 1 15:20:59 GMT 2006
+    - Added note to use libstree version >= .4.2 and removed workaround to 
+      lfs.
+
 0.03  Mon Feb 27 13:28:56 GMT 2006
-    - added missing prerequisite for Test::More
+    - Added missing prerequisite for Test::More.
 
 0.02  Sat Feb 25 18:45:09 GMT 2006
     - insert() now returns the count of successfully inserted strings.

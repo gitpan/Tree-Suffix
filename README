@@ -17,10 +17,14 @@ DEPENDENCIES
 
 A C compiler is required to build this module.
 
+NOTES
+
+Versions of libstree < .4.2 will exhibit a memory leak.
+
 COPYRIGHT AND LICENCE
 
 Copyright (C) 2006 by gray <gray@cpan.org>
-Copyright (C) 2003 Christian Kreibich <christian@whoop.org>
+Copyright (C) 2003-2006 Christian Kreibich <christian@whoop.org>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
