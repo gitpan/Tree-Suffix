@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
@@ -29,6 +29,8 @@ Tree::Suffix - Perl interface to the libstree library
   
   $tree->insert(@strings);
   $tree->remove(@strings);
+
+  $bool = $tree->find($string);
 
   @lcs = $tree->lcs;
   @lcs = $tree->lcs($min_len, $max_len);
@@ -68,6 +70,10 @@ successfully added strings.
 =item $tree->remove(@strings)
 
 Remove the list of strings from the tree.
+
+=item $tree->find($string)
+
+Returns 1 if given string is found in the tree, else returns 0.
 
 =item $tree->lcs
 
@@ -179,6 +185,6 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-gray, C<< <gray at cpan.org> >>
+gray, <gray at cpan.org>
 
 =cut

@@ -1,5 +1,8 @@
 Revision history for Tree::Suffix
 
+0.05 Thu Mar 2 21:39:52 GMT 2006
+    - Added find() method.
+
 0.04 Wed Mar 1 15:20:59 GMT 2006
     - Added note to use libstree version >= .4.2 and removed workaround to 
       lfs.

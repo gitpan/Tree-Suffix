@@ -138,21 +138,21 @@ remove (self, ...)
     LST_STree *tree;
     LST_StringHash *hash;
     LST_StringHashItem *hi;
-    LST_String *string;
+    LST_String *str;
     STRLEN len;
     IV i, j, k, done = 0;
   CODE:
     tree = SV2TREE(self);
     for (i = 1; i < items; i++) {
       len = SvCUR(ST(i));
-      string = lst_string_new(SvPVX(ST(i)), 1, len);
+      str = lst_string_new(SvPVX(ST(i)), 1, len);
       /* Check each hash bucket for the string.  Is there an easier way? */
       for (j = 0; j < LST_STRING_HASH_SIZE; j++) {
         hash = &tree->string_hash[j];
         for (hi = hash->lh_first; hi; hi = hi->items.le_next) {
           if (lst_string_get_length(hi->string) != len)
             continue;
-          for (k = 0; k < len && lst_string_eq(string, k, hi->string, k); k++);
+          for (k = 0; k < len && lst_string_eq(str, k, hi->string, k); k++);
           if (k == len) {
             lst_stree_remove_string(tree, hi->string);
             done++;
@@ -161,7 +161,7 @@ remove (self, ...)
         }
       }
       next_item: 1;
-      lst_string_free(string);
+      lst_string_free(str);
     }
     XSRETURN_IV(done);
 
@@ -191,3 +191,44 @@ _algorithm_longest_substrings (self, min_len=0, max_len=0)
         PUSHs(sv_2mortal(newSVpv((char *)lst_string_print(str), 0)));
       lst_stringset_free(res);
     }
+
+
+IV
+find (self, string)
+    SV *self
+    SV *string
+  PROTOTYPE: $$
+  PREINIT:
+    LST_STree *tree;
+    LST_String *str;
+    LST_Edge *edge;
+    LST_Node *node;
+    STRLEN len;
+    IV todo = 0, done = 0, common;
+  CODE:
+    tree = SV2TREE(self);
+    len = SvCUR(string);
+    str = lst_string_new(SvPVX(string), 1, len);
+    todo = len;
+    /* Have to duplicate code from unexported functions */
+    while (todo > 0) {
+      for (edge = tree->root_node->kids.lh_first; edge; edge = edge->siblings.le_next) {
+        if (lst_string_eq(edge->range.string, edge->range.start_index,
+                          str, done))
+          break;
+      }
+      if (! edge)
+        break;
+      common = lst_string_items_common(edge->range.string,
+                                       edge->range.start_index, str, done,
+                                       todo);
+      if (common < lst_edge_get_length(edge)) {
+        done += common;
+        break;
+      }
+      node = edge->dst_node;
+      done += lst_edge_get_length(edge);
+      todo -= lst_edge_get_length(edge);      
+    }
+    lst_string_free(str);
+    XSRETURN_IV(done == len ? 1 : 0);
