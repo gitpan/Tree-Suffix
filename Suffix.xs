@@ -156,7 +156,8 @@ remove (self, ...)
           if (k == len) {
             lst_stree_remove_string(tree, hi->string);
             done++;
-            goto next_item;
+            if (! tree->allow_duplicates)
+              goto next_item;
           }
         }
       }

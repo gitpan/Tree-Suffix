@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.05';
+$VERSION = '0.06';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
@@ -26,9 +26,11 @@ Tree::Suffix - Perl interface to the libstree library
 
   $tree = Tree::Suffix->new;
   $tree = Tree::Suffix->new(@strings);
+
+  $tree->allow_duplicates($bool);
   
-  $tree->insert(@strings);
-  $tree->remove(@strings);
+  $count = $tree->insert(@strings);
+  $count = $tree->remove(@strings);
 
   $bool = $tree->find($string);
 
@@ -40,8 +42,8 @@ Tree::Suffix - Perl interface to the libstree library
   @lrs = $tree->lrs($min_len, $max_len);
   @lrs = $tree->longest_repeated_substrings;
 
-  $num = $tree->strings;
-  $num = $tree->nodes;
+  $count = $tree->strings;
+  $count = $tree->nodes;
 
   $tree->clear;
   $tree->dump;
@@ -62,14 +64,20 @@ which implements generic suffix trees.
 Creates a new Tree::Suffix object. The constructor will also accept a list 
 of strings to be inserted into the tree.
 
+=item $tree->allow_duplicates($bool)
+
+Determines whether duplicate strings are permitted in the tree.  By 
+default, duplicates are allowed.
+
 =item $tree->insert(@strings)
 
-Inserts the list of strings into the tree.  Returns the number of 
-successfully added strings.
+Inserts the list of strings into the tree, excluding duplicates if they 
+are not allowed.  Returns the number of successfull insertions.
 
 =item $tree->remove(@strings)
 
-Remove the list of strings from the tree.
+Remove the list of strings from the tree, including duplicates if they are 
+allowed.  Returns the number of successful removals.
 
 =item $tree->find($string)
 

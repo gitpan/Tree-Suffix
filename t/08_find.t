@@ -3,5 +3,5 @@ use Test::More tests => 2;
 use Tree::Suffix;
 
 my $tree = Tree::Suffix->new(qw(string stringy astring astringy));
-ok($tree->remove(qw(stringy astringy)) == 2, 'return count');
-ok($tree->strings == 2, 'remaining nodes');
+ok($tree->find('sting') == 0, 'find() non-existent substring');
+ok($tree->find('string'), 'find() existing substring');
