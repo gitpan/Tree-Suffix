@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.06';
+$VERSION = '0.07';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
@@ -33,6 +33,8 @@ Tree::Suffix - Perl interface to the libstree library
   $count = $tree->remove(@strings);
 
   $bool = $tree->find($string);
+  $bool = $tree->match($string);
+  $bool = $tree->search($string);
 
   @lcs = $tree->lcs;
   @lcs = $tree->lcs($min_len, $max_len);
@@ -43,6 +45,8 @@ Tree::Suffix - Perl interface to the libstree library
   @lrs = $tree->longest_repeated_substrings;
 
   $count = $tree->strings;
+  @indices = $tree->strings;
+
   $count = $tree->nodes;
 
   $tree->clear;
@@ -81,7 +85,13 @@ allowed.  Returns the number of successful removals.
 
 =item $tree->find($string)
 
-Returns 1 if given string is found in the tree, else returns 0.
+=item $tree->match($string)
+
+=item $tree->search($string)
+
+In scalar context, returns 1 if given string is found in the tree, else 
+returns 0.  In list context, returns the positions of all occurrences of 
+the given string.
 
 =item $tree->lcs
 
@@ -103,7 +113,8 @@ length of the considered substrings may also be specified.
 
 =item $tree->strings
 
-Returns the total number of strings in the tree.
+In scalar context, returns the total number of strings in the tree.  In 
+list context, returns the indices of the the strings.
 
 =item $tree->nodes
 
@@ -148,8 +159,7 @@ A memory leak will be exhibited if you are using a version of libstree <
 
 =head1 REQUESTS AND BUGS
 
-Please report any bugs or feature requests to C<bug-tree-suffix at 
-rt.cpan.org>, or through the web interface at 
+Please report any bugs or feature requests to 
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tree-Suffix>. I will be 
 notified, and then you'll automatically be notified of progress on your 
 bug as I make changes.

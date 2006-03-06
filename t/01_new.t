@@ -16,6 +16,7 @@ use Tree::Suffix;
   my @methods = qw(
     allow_duplicates insert strings nodes clear remove dump
     lcs longest_common_substrings lrs longest_repeated_substrings
+    find match search
   );
   can_ok('Tree::Suffix', @methods);
 }

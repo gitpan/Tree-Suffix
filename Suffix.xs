@@ -19,6 +19,7 @@ void restore_stderr (int old) {
 
 MODULE = Tree::Suffix  PACKAGE = Tree::Suffix
 
+
 SV *
 new (class, ...)
     char *class
@@ -77,17 +78,25 @@ insert (self, ...)
     XSRETURN_IV(tree->num_strings - pre);
 
 
-IV
+void
 strings (self)
     SV *self
   PROTOTYPE: $
   PREINIT:
     LST_STree *tree;
-  CODE:
+    LST_StringHash *hash;
+    LST_StringHashItem *hi;
+    IV i;
+  PPCODE:
     tree = SV2TREE(self);
-    RETVAL = tree->num_strings;
-  OUTPUT:
-    RETVAL
+    if (GIMME_V != G_ARRAY)
+      XSRETURN_IV(tree->num_strings);
+    EXTEND(SP, tree->num_strings);
+    for (i = 0; i < LST_STRING_HASH_SIZE; i++) {
+      hash = &tree->string_hash[i];
+      for (hi = hash->lh_first; hi; hi = hi->items.le_next)
+        PUSHs(sv_2mortal(newSViv(hi->index)));
+    }
 
 
 IV
@@ -98,9 +107,7 @@ nodes (self)
     LST_STree *tree;
   CODE:
     tree = SV2TREE(self);
-    RETVAL = tree->root_node->num_kids;
-  OUTPUT:
-    RETVAL
+    XSRETURN_IV(tree->root_node->num_kids);
 
 
 void
@@ -198,6 +205,9 @@ IV
 find (self, string)
     SV *self
     SV *string
+  ALIAS:
+    match = 1
+    search = 2
   PROTOTYPE: $$
   PREINIT:
     LST_STree *tree;
@@ -211,13 +221,14 @@ find (self, string)
     len = SvCUR(string);
     str = lst_string_new(SvPVX(string), 1, len);
     todo = len;
-    /* Have to duplicate code from unexported functions */
+    /* Duplicates code from unexported functions:
+         node_find_edge_with_startitem, stree_follow_string_slow
+     */
     while (todo > 0) {
-      for (edge = tree->root_node->kids.lh_first; edge; edge = edge->siblings.le_next) {
+      for (edge = tree->root_node->kids.lh_first; edge; edge = edge->siblings.le_next)
         if (lst_string_eq(edge->range.string, edge->range.start_index,
                           str, done))
           break;
-      }
       if (! edge)
         break;
       common = lst_string_items_common(edge->range.string,
@@ -228,8 +239,9 @@ find (self, string)
         break;
       }
       node = edge->dst_node;
-      done += lst_edge_get_length(edge);
-      todo -= lst_edge_get_length(edge);      
+      len = lst_edge_get_length(edge);
+      done += len;
+      todo -= len;
     }
     lst_string_free(str);
-    XSRETURN_IV(done == len ? 1 : 0);
+    XSRETURN_IV(done >= len);

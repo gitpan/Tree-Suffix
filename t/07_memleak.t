@@ -2,8 +2,13 @@ use strict;
 use Test::More;
 use Tree::Suffix;
 
-plan skip_all => 'For development only';
-#plan tests => 3;
+unless (mem())
+{
+  plan skip_all => 'Unable to determine memory usage via `ps` command';
+}
+
+plan tests => 2;
+
 
 sub mem
 {
@@ -12,16 +17,6 @@ sub mem
   return $mem;
 }
 
-{
-  my $tree = Tree::Suffix->new();
-  my $start = mem;
-  for (my $i=0; $i<10_000; $i++)
-  {
-    my $tree = Tree::Suffix->new();
-  }
-  my $end = mem;
-  ok($end - $start < 1_000, 'new()');
-}
 
 {
   my $tree = Tree::Suffix->new();
@@ -33,9 +28,17 @@ sub mem
     $tree->insert('aa'..'gg');
   }
   my $end = mem;
-  ok($end - $start < 1_000, 'insert()');
-  diag("\nMemory: $start -> $end");
+  if ($end - $start > 1_000)
+  {
+    diag("\nMemory: $start -> $end\nVerify that you have libstree >= 0.4.2");
+    ok(0, 'insert()');
+  }
+  else
+  {
+    ok(1, 'insert()');
+  }
 }
+
 
 {
   my $tree = Tree::Suffix->new();
@@ -47,6 +50,13 @@ sub mem
     $tree->insert('aa'..'gg');
   }
   my $end = mem;
-  ok($end - $start < 1_000, 'new()/insert()');
-  diag("\nMemory: $start -> $end");
+  if ($end - $start > 1_000)
+  {
+    diag("\nMemory: $start -> $end\nVerify that you have libstree >= 0.4.2");
+    ok(0, 'new()/insert()');
+  }
+  else
+  {
+    ok(1, 'new()/insert()');
+  }
 }

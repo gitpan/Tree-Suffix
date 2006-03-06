@@ -1,5 +1,10 @@
 Revision history for Tree::Suffix
 
+0.07  Sun Mar 5 22:52:55 GMT 2006
+    - Added match, search aliases for find()
+    - Made memleak test manditory to enforce use of newer libstree version.
+    - strings() now returns string indices in list context.
+
 0.06  Fri Mar 3 11:06:29 GMT 2006
     - Added documentation and tests for allow_duplicates().
     - Updated remove() to also remove duplicates.
@@ -8,8 +13,8 @@ Revision history for Tree::Suffix
 0.05  Thu Mar 2 21:39:52 GMT 2006
     - Added find() method.
 
-0.04  Wed Mar  1 15:20:59 GMT 2006
-    - Added note to use libstree version >= .4.2 and removed workaround to 
+0.04  Wed Mar 1 15:20:59 GMT 2006
+    - Added note to use libstree version >= 0.4.2 and removed workaround to 
       lfs.
 
 0.03  Mon Feb 27 13:28:56 GMT 2006
