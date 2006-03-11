@@ -3,13 +3,10 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.07';
+$VERSION = '0.08';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
-
-*longest_common_substrings   = \&lcs;
-*longest_repeated_substrings = \&lrs;
 
 
 1;
@@ -32,9 +29,15 @@ Tree::Suffix - Perl interface to the libstree library
   $count = $tree->insert(@strings);
   $count = $tree->remove(@strings);
 
-  $bool = $tree->find($string);
-  $bool = $tree->match($string);
-  $bool = $tree->search($string);
+  $count = $tree->find($string);
+  $count = $tree->match($string);
+  $count = $tree->search($string);
+  @pos = $tree->find($string);
+  @pos = $tree->match($string);
+  @pos = $tree->search($string);
+
+  $string = $tree->string($id);
+  $string = $tree->string($id, $start ,$end);
 
   @lcs = $tree->lcs;
   @lcs = $tree->lcs($min_len, $max_len);
@@ -45,7 +48,7 @@ Tree::Suffix - Perl interface to the libstree library
   @lrs = $tree->longest_repeated_substrings;
 
   $count = $tree->strings;
-  @indices = $tree->strings;
+  @pos = $tree->strings;
 
   $count = $tree->nodes;
 
@@ -65,8 +68,8 @@ which implements generic suffix trees.
 
 =item $tree = Tree::Suffix->new(@strings)
 
-Creates a new Tree::Suffix object. The constructor will also accept a list 
-of strings to be inserted into the tree.
+Creates a new Tree::Suffix object. The constructor will accept a list of 
+strings to be inserted into the tree.
 
 =item $tree->allow_duplicates($bool)
 
@@ -89,9 +92,18 @@ allowed.  Returns the number of successful removals.
 
 =item $tree->search($string)
 
-In scalar context, returns 1 if given string is found in the tree, else 
-returns 0.  In list context, returns the positions of all occurrences of 
-the given string.
+In scalar context, returns the number of occurrences of the substring in 
+the tree.  In list context, returns the positions of all occurrences of the 
+given string as a list of arrays in the form (string_index, start, end).
+
+=item $tree->string(string_index)
+
+=item $tree->string(string_index, start)
+
+=item $tree->string(string_index, start, end)
+
+Returns the string at index_id.  The start and end positions may be 
+specified to return a substring.
 
 =item $tree->lcs
 
@@ -99,8 +111,8 @@ the given string.
 
 =item $tree->longest_common_substrings
 
-Returns a list of the longest common substrings. The minimum and maximum
-length of the considered substrings may also be specified.
+Returns a list of the longest common substrings. The minimum and maximum 
+length of the considered substrings may be specified.
 
 =item $tree->lrs
 
@@ -109,12 +121,12 @@ length of the considered substrings may also be specified.
 =item $tree->longest_repeated_substrings
 
 Returns a list of the longest repeated substrings. The minimum and maximum
-length of the considered substrings may also be specified.
+length of the considered substrings may be specified.
 
 =item $tree->strings
 
 In scalar context, returns the total number of strings in the tree.  In 
-list context, returns the indices of the the strings.
+list context, returns the list of string ids.
 
 =item $tree->nodes
 
@@ -163,6 +175,16 @@ Please report any bugs or feature requests to
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tree-Suffix>. I will be 
 notified, and then you'll automatically be notified of progress on your 
 bug as I make changes.
+
+=head1 TODO
+
+=over 4
+
+=item Produce GraphViz dot format dump.
+
+=item User-definable string types (e.g. > 256 char alphabets).
+
+=back
 
 =head1 SUPPORT
 

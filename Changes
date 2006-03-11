@@ -1,5 +1,10 @@
 Revision history for Tree::Suffix
 
+0.08
+    - Fixed new() and insert() to accept integers.
+    - Updated find() to return matched positions in list context.
+    - Added string() to return substring matching given position.
+
 0.07  Sun Mar 5 22:52:55 GMT 2006
     - Added match, search aliases for find()
     - Made memleak test manditory to enforce use of newer libstree version.
