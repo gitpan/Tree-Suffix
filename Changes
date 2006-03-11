@@ -1,6 +1,10 @@
 Revision history for Tree::Suffix
 
-0.08
+0.09  Sat Mar 11 06:03:14 GMT 2006
+    - Fixed string() to avoid returning "<eos>" when start pos == string 
+      length.
+
+0.08  Sat Mar 11 06:03:14 GMT 2006
     - Fixed new() and insert() to accept integers.
     - Updated find() to return matched positions in list context.
     - Added string() to return substring matching given position.

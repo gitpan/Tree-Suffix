@@ -1,5 +1,5 @@
 use strict;
-use Test::More no_plan => 7;
+use Test::More tests => 8;
 use Tree::Suffix;
 
 my $tree = Tree::Suffix->new(qw(actgttact gactagcga gacacacta));
@@ -10,3 +10,4 @@ ok(! defined $tree->string(5), 'bad index');
 ok(! defined $tree->string(1, -2, -5), 'bad start/end positions');
 ok($tree->string(1, -2) eq 'gactagcga', 'bad start position');
 ok($tree->string(1, 1, 23) eq 'actagcga', 'bad end position');
+ok(! defined $tree->string(1, 9), 'override <eos>');

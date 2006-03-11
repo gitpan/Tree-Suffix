@@ -312,6 +312,9 @@ string (self, id, start=0, end=-1)
       end = hi->string->num_items - 1;
     if (start < 0)
       start = 0;
+    /* Avoid print_func from returning "<eos>" */
+    else if (start == hi->string->num_items - 1)
+      start++;
     if (end < start)
       XSRETURN_UNDEF;
     range.start_index = start;

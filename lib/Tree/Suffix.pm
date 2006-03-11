@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.08';
+$VERSION = '0.09';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
@@ -74,7 +74,8 @@ strings to be inserted into the tree.
 =item $tree->allow_duplicates($bool)
 
 Determines whether duplicate strings are permitted in the tree.  By 
-default, duplicates are allowed.
+default, duplicates are allowed.  Note, this must be called before strings 
+are inserted for it to have an effect.
 
 =item $tree->insert(@strings)
 
@@ -180,9 +181,9 @@ bug as I make changes.
 
 =over 4
 
-=item Produce GraphViz dot format dump.
+=item * Produce GraphViz dot format dump.
 
-=item User-definable string types (e.g. > 256 char alphabets).
+=item * User-definable string types (e.g. > 256 char alphabets).
 
 =back
 
