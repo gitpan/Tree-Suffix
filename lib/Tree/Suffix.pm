@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);
@@ -15,7 +15,7 @@ __END__
 
 =head1 NAME
 
-Tree::Suffix - Perl interface to the libstree library
+Tree::Suffix - Perl interface to the libstree library.
 
 =head1 SYNOPSIS
 
@@ -24,7 +24,7 @@ Tree::Suffix - Perl interface to the libstree library
   $tree = Tree::Suffix->new;
   $tree = Tree::Suffix->new(@strings);
 
-  $tree->allow_duplicates($bool);
+  $bool = $tree->allow_duplicates($bool);
   
   $count = $tree->insert(@strings);
   $count = $tree->remove(@strings);
@@ -75,7 +75,7 @@ strings to be inserted into the tree.
 
 Determines whether duplicate strings are permitted in the tree.  By 
 default, duplicates are allowed.  Note, this must be called before strings 
-are inserted for it to have an effect.
+are inserted for it to have an effect.  Returns the value of the flag.
 
 =item $tree->insert(@strings)
 

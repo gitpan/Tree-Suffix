@@ -1,5 +1,11 @@
 Revision history for Tree::Suffix
 
+0.10  Sun Mar 12 08:43:25 GMT 2006
+    - Fixed find() to prevent bus error when given undefined input.
+    - Updated string() to return empty string instead of undef.
+    - Updated allow_duplicates to get the current flag value if it 
+      is called without an argument.
+
 0.09  Sat Mar 11 06:03:14 GMT 2006
     - Fixed string() to avoid returning "<eos>" when start pos == string 
       length.

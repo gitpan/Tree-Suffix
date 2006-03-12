@@ -79,7 +79,7 @@ DESTROY (self)
     lst_stree_free(tree);
 
 
-void
+IV
 allow_duplicates (self, flag=1)
     SV *self
     IV flag
@@ -88,7 +88,11 @@ allow_duplicates (self, flag=1)
     LST_STree *tree;
   CODE:
     tree = SV2TREE(self);
-    lst_stree_allow_duplicates(tree, flag);
+    if (items == 2)
+      lst_stree_allow_duplicates(tree, flag);
+    RETVAL = tree->allow_duplicates;
+  OUTPUT:
+    RETVAL
 
 
 IV
@@ -254,21 +258,22 @@ find (self, string)
     LST_Edge *edge;
     LST_Node *node;
     AV *match;
-    STRLEN len;
+    STRLEN len = 0;
   PPCODE:
     tree = SV2TREE(self);
-    len = SvCUR(string);
+    if (SvOK(string))
+      len = SvCUR(string);
     if (len < 1)
-      XSRETURN_EMPTY;
+      GIMME_V == G_ARRAY ? XSRETURN_EMPTY : XSRETURN_IV(0);
     str = lst_string_new(SvPV_nolen(string), 1, len);
     node = follow_string(tree, str);
     lst_string_free(str);
     if (! node)
       GIMME_V == G_ARRAY ? XSRETURN_EMPTY : XSRETURN_IV(0);
+    /* Perform a depth-first search from matching node to find leafs. */
     TAILQ_HEAD(shead, lst_node) stack;
     TAILQ_INIT(&stack);
     TAILQ_INSERT_HEAD(&stack, node, iteration);
-    /* Perform a depth-first search from matching node to find leafs. */
     while (node = stack.tqh_first) {
       TAILQ_REMOVE(&stack, stack.tqh_first, iteration);
       if (lst_node_is_leaf(node)) {
@@ -292,7 +297,7 @@ string (self, id, start=0, end=-1)
     IV id
     IV start
     IV end
-  PROTOTYPE: $$
+  PROTOTYPE: $$;$$
   PREINIT:
     LST_STree *tree;
     LST_StringHash *hash;
@@ -305,7 +310,7 @@ string (self, id, start=0, end=-1)
     for (hi = hash->lh_first; hi && hi->string->id != id + 1;
          hi = hi->items.le_next);
     if (! hi)
-      XSRETURN_UNDEF;
+      XSRETURN_NO;
     lst_string_index_init(&range);
     range.string = hi->string;
     if (items < 4)
@@ -316,7 +321,7 @@ string (self, id, start=0, end=-1)
     else if (start == hi->string->num_items - 1)
       start++;
     if (end < start)
-      XSRETURN_UNDEF;
+      XSRETURN_NO;
     range.start_index = start;
     *(range.end_index) = end;
     RETVAL = newSVpv(hi->string->sclass->print_func(&range), 0);
