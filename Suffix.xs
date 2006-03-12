@@ -60,6 +60,8 @@ new (class, ...)
     if (! tree)
       XSRETURN_UNDEF;
     for (i = 1; i < items; i++) {
+      if (! SvOK(ST(i)))
+        continue;
       string = SvPV(ST(i), len);
       lst_stree_add_string(tree, lst_string_new(string, 1, len));
     }
@@ -80,16 +82,16 @@ DESTROY (self)
 
 
 IV
-allow_duplicates (self, flag=1)
+allow_duplicates (self, flag=&PL_sv_yes)
     SV *self
-    IV flag
-  PROTOTYPE: $$
+    SV *flag
+  PROTOTYPE: $;$
   PREINIT:
     LST_STree *tree;
   CODE:
     tree = SV2TREE(self);
     if (items == 2)
-      lst_stree_allow_duplicates(tree, flag);
+      lst_stree_allow_duplicates(tree, SvTRUE(flag));
     RETVAL = tree->allow_duplicates;
   OUTPUT:
     RETVAL
@@ -110,6 +112,8 @@ insert (self, ...)
     tree = SV2TREE(self);
     pre = tree->num_strings;
     for (i = 1; i < items; i++) {
+      if (! SvOK(ST(i)))
+        continue;
       string = SvPV(ST(i), len);
       lst_stree_add_string(tree, lst_string_new(string, 1, len));
     }
@@ -190,6 +194,8 @@ remove (self, ...)
   CODE:
     tree = SV2TREE(self);
     for (i = 1; i < items; i++) {
+      if (! SvOK(ST(i)))
+        continue;
       string = SvPV(ST(i), len);
       str = lst_string_new(string, 1, len);
       /* Check each hash bucket for the string.  Would it be better to use

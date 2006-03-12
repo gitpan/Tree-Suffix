@@ -1,5 +1,5 @@
 use strict;
-use Test::More tests => 6;
+use Test::More tests => 8;
 use Tree::Suffix;
 
 {
@@ -8,6 +8,10 @@ use Tree::Suffix;
   ok($tree->strings, 'strings');
   ok($tree->nodes, 'nodes');
   is($tree->strings, 3, 'insert($)');
+  $tree->insert(undef);
+  is($tree->strings, 3, 'undef');
+  $tree->insert('');
+  is($tree->strings, 3, 'empty string');
 }
 
 {

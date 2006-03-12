@@ -1,5 +1,8 @@
 Revision history for Tree::Suffix
 
+0.11  Sun Mar 12 17:40:55 GMT 2006
+    - Prevent warnings from undefined arguments.
+
 0.10  Sun Mar 12 08:43:25 GMT 2006
     - Fixed find() to prevent bus error when given undefined input.
     - Updated string() to return empty string instead of undef.
