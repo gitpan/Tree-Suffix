@@ -3,12 +3,12 @@ use Test::More tests => 12;
 use Tree::Suffix;
 
 my $tree = Tree::Suffix->new(qw(string stringy astring astringy));
-ok($tree->find('sting') == 0, 'non-existent substring');
-ok($tree->find('string') == 4, 'existing string');
-ok($tree->find('stri') == 4, 'existing prefix');
-ok($tree->find('ing') == 4, 'existing suffix');
-ok($tree->find(undef) == 0, 'undef');
-ok($tree->find('') == 0, 'empty string');
+is($tree->find('sting'), 0, 'non-existent substring');
+is($tree->find('string'), 4, 'existing string');
+is($tree->find('stri'), 4, 'existing prefix');
+is($tree->find('ing'), 4, 'existing suffix');
+is($tree->find(undef), 0, 'undef');
+is($tree->find(''), 0, 'empty string');
 
 $tree = Tree::Suffix->new(qw(mississippi));
 is_deeply([$tree->find(undef)], [], 'undef in list context');

@@ -263,6 +263,7 @@ find (self, string)
     LST_String *str;
     LST_Edge *edge;
     LST_Node *node;
+    TAILQ_HEAD(shead, lst_node) stack;
     AV *match;
     STRLEN len = 0;
   PPCODE:
@@ -277,7 +278,6 @@ find (self, string)
     if (! node)
       GIMME_V == G_ARRAY ? XSRETURN_EMPTY : XSRETURN_IV(0);
     /* Perform a depth-first search from matching node to find leafs. */
-    TAILQ_HEAD(shead, lst_node) stack;
     TAILQ_INIT(&stack);
     TAILQ_INSERT_HEAD(&stack, node, iteration);
     while (node = stack.tqh_first) {
