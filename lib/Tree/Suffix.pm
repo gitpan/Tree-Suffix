@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.12';
+$VERSION = '0.13';
 
 require XSLoader;
 XSLoader::load('Tree::Suffix', $VERSION);

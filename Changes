@@ -1,5 +1,8 @@
 Revision history for Tree::Suffix
 
+0.13 Tue Mar 21 11:06:59 GMT 2006
+    - Use typemap.
+
 0.12  Mon Mar 13 02:16:22 GMT 2006
     - Corrected find() to abide by ISO C90 by moving declaration before code.
     - Changed tests to use 'is' instead of 'ok' to provide better error

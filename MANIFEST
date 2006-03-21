@@ -18,4 +18,5 @@ t/09_duplicates.t
 t/10_pod.t
 t/11_pod_coverage.t
 t/12_string.t
+typemap
 META.yml                                 Module meta-data (added by MakeMaker)
