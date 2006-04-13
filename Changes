@@ -1,5 +1,9 @@
 Revision history for Tree::Suffix
 
+0.14 Thu Apr 13 11:47:37 GMT 2006
+    - Updated Makefile.PL to look in environment variables for lib and inc
+      dirs
+
 0.13 Tue Mar 21 11:06:59 GMT 2006
     - Use typemap.
 

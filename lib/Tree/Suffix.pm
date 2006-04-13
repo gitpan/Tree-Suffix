@@ -1,13 +1,19 @@
 package Tree::Suffix;
 
 use strict;
-use vars qw($VERSION);
+use vars qw($VERSION @ISA);
 
-$VERSION = '0.13';
+$VERSION = '0.14';
 
-require XSLoader;
-XSLoader::load('Tree::Suffix', $VERSION);
-
+eval {
+  require XSLoader;
+  XSLoader::load('Tree::Suffix', $VERSION);
+  1;
+} or do {
+  require DynaLoader;
+  push @ISA, 'DynaLoader';
+  bootstrap Tree::Suffix $VERSION;
+};
 
 1;
 

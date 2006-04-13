@@ -5,7 +5,6 @@
 
 #include <libstree.h>
 
-
 int
 redirect_stderr () {
   return dup2(fileno(stdout), fileno(stderr));
@@ -40,7 +39,7 @@ follow_string (LST_STree *tree, LST_String *string) {
   return (done < string->num_items - 1) ? NULL : node;
 }
 
-typedef LST_STree *Tree__Suffix;
+typedef LST_STree * Tree__Suffix;
 
 MODULE = Tree::Suffix  PACKAGE = Tree::Suffix
 
@@ -66,13 +65,6 @@ new (class, ...)
     RETVAL = self;
   OUTPUT:
     RETVAL
-
-void
-DESTROY (self)
-    Tree::Suffix self
-  PROTOTYPE: $
-  CODE:
-    lst_stree_free(self);
 
 IV
 allow_duplicates (self, flag=&PL_sv_yes)
@@ -294,3 +286,10 @@ string (self, id, start=0, end=-1)
     RETVAL = newSVpv(hi->string->sclass->print_func(&range), 0);
   OUTPUT:
     RETVAL
+
+void
+DESTROY (self)
+    Tree::Suffix self
+  PROTOTYPE: $
+  CODE:
+    lst_stree_free(self);
