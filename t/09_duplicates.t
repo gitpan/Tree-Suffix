@@ -19,4 +19,3 @@ is($tree->allow_duplicates(undef), 0, 'undef');
 is($tree->allow_duplicates("1"), 1, '"1"');
 is($tree->allow_duplicates(""), 0, 'empty string');
 is($tree->allow_duplicates("0"), 0, '"0"');
-

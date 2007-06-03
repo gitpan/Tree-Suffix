@@ -8,7 +8,7 @@ is_deeply([sort @lrs], [qw(astring stringy)], 'lrs');
 
 @lrs = $tree->lrs(0, 5);
 is_deeply(
-  [sort @lrs],
-  [qw(astri ringy strin strin tring tring)],
-  'lrs(min, max)'
+    [sort @lrs],
+    [qw(astri ringy strin strin tring tring)],
+    'lrs(min, max)'
 );

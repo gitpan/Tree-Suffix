@@ -15,20 +15,19 @@ is_deeply([$tree->find(undef)], [], 'undef in list context');
 is_deeply([$tree->find('')], [], 'empty string in list context');
 is_deeply([$tree->find('mis')], [[0, 0, 2]], 'list context');
 is_deeply(
-  [sort_arefs($tree->find('ss'))], [[0, 2, 3], [0, 5, 6]], 'list context'
+    [sort_arefs($tree->find('ss'))], [[0, 2, 3], [0, 5, 6]], 'list context'
 );
 $tree = Tree::Suffix->new(qw(actgttact gactagcga gacacacta));
 is_deeply(
-  [sort_arefs($tree->find('act'))],
-  [[0, 0, 2], [0, 6, 8], [1, 1, 3], [2, 5, 7]], 'list context'
+    [sort_arefs($tree->find('act'))],
+    [[0, 0, 2], [0, 6, 8], [1, 1, 3], [2, 5, 7]], 'list context'
 );
 is_deeply([$tree->find('virus')], [], 'no match in list context');
 
 
-sub sort_arefs
-{
-  map  { $_->[0] }
-  sort { $a->[1] cmp $b->[1] }
-  map  { [$_, join(' ', @$_)] } 
-  @_;
+sub sort_arefs {
+    map  { $_->[0] }
+    sort { $a->[1] cmp $b->[1] }
+    map  { [$_, join(' ', @$_)] } 
+    @_;
 }

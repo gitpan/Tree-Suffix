@@ -3,16 +3,16 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION @ISA);
 
-$VERSION = '0.14';
+$VERSION = '0.15';
 
 eval {
-  require XSLoader;
-  XSLoader::load('Tree::Suffix', $VERSION);
-  1;
+    require XSLoader;
+    XSLoader::load('Tree::Suffix', $VERSION);
+    1;
 } or do {
-  require DynaLoader;
-  push @ISA, 'DynaLoader';
-  bootstrap Tree::Suffix $VERSION;
+    require DynaLoader;
+    push @ISA, 'DynaLoader';
+    bootstrap Tree::Suffix $VERSION;
 };
 
 1;
@@ -25,41 +25,41 @@ Tree::Suffix - Perl interface to the libstree library.
 
 =head1 SYNOPSIS
 
-  use Tree::Suffix;
+    use Tree::Suffix;
 
-  $tree = Tree::Suffix->new;
-  $tree = Tree::Suffix->new(@strings);
+    $tree = Tree::Suffix->new;
+    $tree = Tree::Suffix->new(@strings);
 
-  $bool = $tree->allow_duplicates($bool);
+    $bool = $tree->allow_duplicates($bool);
   
-  $count = $tree->insert(@strings);
-  $count = $tree->remove(@strings);
+    $count = $tree->insert(@strings);
+    $count = $tree->remove(@strings);
 
-  $count = $tree->find($string);
-  $count = $tree->match($string);
-  $count = $tree->search($string);
-  @pos = $tree->find($string);
-  @pos = $tree->match($string);
-  @pos = $tree->search($string);
+    $count = $tree->find($string);
+    $count = $tree->match($string);
+    $count = $tree->search($string);
+    @pos = $tree->find($string);
+    @pos = $tree->match($string);
+    @pos = $tree->search($string);
 
-  $string = $tree->string($id);
-  $string = $tree->string($id, $start ,$end);
+    $string = $tree->string($id);
+    $string = $tree->string($id, $start ,$end);
 
-  @lcs = $tree->lcs;
-  @lcs = $tree->lcs($min_len, $max_len);
-  @lcs = $tree->longest_common_substrings;
+    @lcs = $tree->lcs;
+    @lcs = $tree->lcs($min_len, $max_len);
+    @lcs = $tree->longest_common_substrings;
 
-  @lrs = $tree->lrs;
-  @lrs = $tree->lrs($min_len, $max_len);
-  @lrs = $tree->longest_repeated_substrings;
+    @lrs = $tree->lrs;
+    @lrs = $tree->lrs($min_len, $max_len);
+    @lrs = $tree->longest_repeated_substrings;
 
-  $count = $tree->strings;
-  @pos = $tree->strings;
+    $count = $tree->strings;
+    @pos = $tree->strings;
 
-  $count = $tree->nodes;
+    $count = $tree->nodes;
 
-  $tree->clear;
-  $tree->dump;
+    $tree->clear;
+    $tree->dump;
 
 =head1 DESCRIPTION
 
@@ -153,19 +153,19 @@ Prints a representation of the tree to STDOUT.
 
 To find the longest palindrome of a string:
 
-  use Tree::Suffix;
-  $str   = 'mississippi';
-  $tree  = Tree::Suffix->new($str, scalar reverse $str);
-  ($pal) = $tree->lcs;
-  print "Longest palindrome: $pal\n";
+    use Tree::Suffix;
+    $str   = 'mississippi';
+    $tree  = Tree::Suffix->new($str, scalar reverse $str);
+    ($pal) = $tree->lcs;
+    print "Longest palindrome: $pal\n";
 
 This would print:
 
-  Longest palindrome: ississi
+    Longest palindrome: ississi
 
 =head1 SEE ALSO
 
-libstree L<http://www.cl.cam.ac.uk/~cpk25/libstree/>
+libstree L<http://www.icir.org/christian/libstree/>
 
 L<SuffixTree>
 
@@ -178,20 +178,13 @@ A memory leak will be exhibited if you are using a version of libstree <
 
 =head1 REQUESTS AND BUGS
 
+When reporting a bug, first verify that you can successfully run the tests in 
+the libstree distribution.
+
 Please report any bugs or feature requests to 
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tree-Suffix>. I will be 
 notified, and then you'll automatically be notified of progress on your 
 bug as I make changes.
-
-=head1 TODO
-
-=over 4
-
-=item * Produce GraphViz dot format dump.
-
-=item * User-definable string types (e.g. > 256 char alphabets).
-
-=back
 
 =head1 SUPPORT
 
@@ -224,8 +217,6 @@ L<http://search.cpan.org/dist/Tree-Suffix>
 =head1 COPYRIGHT AND LICENSE
 
 Copyright (C) 2006 gray <gray at cpan.org>, all rights reserved.
-
-Copyright (C) 2003-2006 Christian Kreibich <christian@whoop.org>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
