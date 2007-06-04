@@ -122,7 +122,6 @@ PPCODE:
     if (GIMME_V != G_ARRAY) {
         XSRETURN_IV(self->num_strings);
     }
-
     EXTEND(SP, self->num_strings);
     for (i = 0; i < LST_STRING_HASH_SIZE; i++) {
         hash = &self->string_hash[i];
@@ -280,9 +279,9 @@ PPCODE:
     }
 
 SV *
-string (self, id, start=0, end=-1)
+string (self, idx, start=0, end=-1)
     Tree::Suffix self
-    IV id
+    IV idx
     IV start
     IV end
 PROTOTYPE: $$;$$
@@ -292,14 +291,21 @@ PREINIT:
     LST_StringIndex range;
     IV i;
 CODE:
-    hash = &self->string_hash[(id + 1) % LST_STRING_HASH_SIZE];
-    for (hi = hash->lh_first; hi && hi->string->id != id + 1;
-         hi = hi->items.le_next);
+    for (i = 0; i < LST_STRING_HASH_SIZE; i++) {
+        hash = &self->string_hash[i];
+        for (hi = hash->lh_first; hi && hi->index != idx;
+            hi = hi->items.le_next);
+        if (hi && hi->index == idx) {
+            break;
+        }
+    }
     if (! hi) {
         XSRETURN_NO;
     }
+ 
     lst_string_index_init(&range);
     range.string = hi->string;
+
     if (items < 4) {
         end = hi->string->num_items - 1;
     }

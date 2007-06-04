@@ -1,5 +1,8 @@
 Revision history for Tree::Suffix
 
+0.16 Mon Jun 4 17:33:42 GMT 2007
+	- RT #23674: Use string indexes, not ids.
+
 0.15 Sun Jun 3 08:34:14 GMT 2007
     - RT #24865: Fixed memory leak in find().
     - Updated ppport.h.

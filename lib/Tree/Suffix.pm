@@ -3,7 +3,7 @@ package Tree::Suffix;
 use strict;
 use vars qw($VERSION @ISA);
 
-$VERSION = '0.15';
+$VERSION = '0.16';
 
 eval {
     require XSLoader;
@@ -74,23 +74,23 @@ which implements generic suffix trees.
 
 =item $tree = Tree::Suffix->new(@strings)
 
-Creates a new Tree::Suffix object. The constructor will accept a list of 
+Creates a new Tree::Suffix object. The constructor will accept a list of
 strings to be inserted into the tree.
 
 =item $tree->allow_duplicates($bool)
 
-Determines whether duplicate strings are permitted in the tree.  By 
-default, duplicates are allowed.  Note, this must be called before strings 
-are inserted for it to have an effect.  Returns the value of the flag.
+Determines whether duplicate strings are permitted in the tree.  By default,
+duplicates are allowed.  Note, this must be called before strings are inserted
+for it to have an effect.  Returns the value of the flag.
 
 =item $tree->insert(@strings)
 
-Inserts the list of strings into the tree, excluding duplicates if they 
-are not allowed.  Returns the number of successfull insertions.
+Inserts the list of strings into the tree, excluding duplicates if they are
+not allowed.  Returns the number of successfull insertions.
 
 =item $tree->remove(@strings)
 
-Remove the list of strings from the tree, including duplicates if they are 
+Remove the list of strings from the tree, including duplicates if they are
 allowed.  Returns the number of successful removals.
 
 =item $tree->find($string)
@@ -99,9 +99,9 @@ allowed.  Returns the number of successful removals.
 
 =item $tree->search($string)
 
-In scalar context, returns the number of occurrences of the substring in 
-the tree.  In list context, returns the positions of all occurrences of the 
-given string as a list of arrays in the form (string_index, start, end).
+In scalar context, returns the number of occurrences of the substring in the
+tree.  In list context, returns the positions of all occurrences of the given
+string as a list of array references in the form [string_index, start, end].
 
 =item $tree->string(string_index)
 
@@ -109,8 +109,8 @@ given string as a list of arrays in the form (string_index, start, end).
 
 =item $tree->string(string_index, start, end)
 
-Returns the string at index_id.  The start and end positions may be 
-specified to return a substring.
+Returns the string at index_id.  The start and end positions may be specified
+to return a substring.
 
 =item $tree->lcs
 
@@ -132,8 +132,8 @@ length of the considered substrings may be specified.
 
 =item $tree->strings
 
-In scalar context, returns the total number of strings in the tree.  In 
-list context, returns the list of string ids.
+In scalar context, returns the total number of strings in the tree.  In list
+context, returns the list of string indexes.
 
 =item $tree->nodes
 
@@ -173,15 +173,13 @@ L<http://en.wikipedia.org/wiki/Suffix_tree>
 
 =head1 NOTES
 
-A memory leak will be exhibited if you are using a version of libstree < 
-.4.2.
+A memory leak will be exhibited if you are using a version of libstree < .4.2.
 
 =head1 REQUESTS AND BUGS
 
-When reporting a bug, first verify that you can successfully run the tests in 
+When reporting a bug, first verify that you can successfully run the tests in
 the libstree distribution.
 
-Please report any bugs or feature requests to 
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tree-Suffix>. I will be 
 notified, and then you'll automatically be notified of progress on your 
 bug as I make changes.
