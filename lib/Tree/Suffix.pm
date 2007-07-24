@@ -1,18 +1,16 @@
 package Tree::Suffix;
 
 use strict;
-use vars qw($VERSION @ISA);
 
-$VERSION = '0.16';
+our $VERSION = '0.17';
 
 eval {
     require XSLoader;
-    XSLoader::load('Tree::Suffix', $VERSION);
+    XSLoader::load( __PACKAGE__, $VERSION );
     1;
 } or do {
     require DynaLoader;
-    push @ISA, 'DynaLoader';
-    bootstrap Tree::Suffix $VERSION;
+    DynaLoader::bootstrap( __PACKAGE__, $VERSION );
 };
 
 1;
@@ -180,9 +178,10 @@ A memory leak will be exhibited if you are using a version of libstree < .4.2.
 When reporting a bug, first verify that you can successfully run the tests in
 the libstree distribution.
 
+Please report any bugs or feature requests to 
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tree-Suffix>. I will be 
-notified, and then you'll automatically be notified of progress on your 
-bug as I make changes.
+notified, and then you'll automatically be notified of progress on your bug as 
+I make changes.
 
 =head1 SUPPORT
 
@@ -214,10 +213,10 @@ L<http://search.cpan.org/dist/Tree-Suffix>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2006 gray <gray at cpan.org>, all rights reserved.
+Copyright (C) 2006-2007 gray <gray at cpan.org>, all rights reserved.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This library is free software; you can redistribute it and/or modify it under 
+the same terms as Perl itself.
 
 =head1 AUTHOR
 

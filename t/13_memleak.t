@@ -2,27 +2,26 @@ use strict;
 use Test::More;
 use Tree::Suffix;
 
-unless (mem()) {
-    plan skip_all => 'Unable to determine memory usage via `ps` command';
+unless (eval { require Proc::ProcessTable } ) {
+    plan skip_all => 'Proc::ProcessTable is not installed';
 }
 
 plan tests => 1;
 
-sub mem {
-    my $mem = (`ps -p $$ -o rss`)[1];
-    $mem =~ s/^\s*|\s*$//g;
-    return $mem;
+my $p = Proc::ProcessTable->new;
+for (@{$p->table}) {
+    $p = $_ and last if $_->pid == $$;
 }
 
 {
     my $str = "mississippi";
     my $tree = Tree::Suffix->new($str);
 
-    my $start = mem;
+    my $start = $p->rss;
     for (my $i=0; $i<100_000; $i++) {
         my @matches = $tree->find('is');
     }
-    my $end = mem;
+    my $end = $p->rss;
     if ($end - $start > 1_000) {
         diag("Memory leak: $start -> $end");
         ok(0, 'find()');

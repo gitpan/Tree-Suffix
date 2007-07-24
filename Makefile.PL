@@ -1,17 +1,18 @@
 use strict;
+use warnings;
 use ExtUtils::MakeMaker;
 
-my $libs = join ' ', @ENV{qw(LDFLAGS LD_LIBRARY_PATH)};
-my $inc  = join ' ', @ENV{qw(CFLAGS CXXFLAGS CPPFLAGS)};
+my $libs = join ' ', grep { defined } @ENV{qw(LDFLAGS LD_LIBRARY_PATH)};
+my $inc  = join ' ', grep { defined } @ENV{qw(CFLAGS CXXFLAGS CPPFLAGS)};
 
 WriteMakefile(
     NAME          => 'Tree::Suffix',
+    AUTHOR        => 'gray <gray@cpan.org>',
     VERSION_FROM  => 'lib/Tree/Suffix.pm',
     ABSTRACT_FROM => 'lib/Tree/Suffix.pm',
-    AUTHOR        => 'gray <gray@cpan.org>',
     PREREQ_PM     => { 'Test::More' => 0 },
     LIBS          => [ "$libs -lstree" ],
     INC           => $inc,
-    clean         => { FILES => 'Tree-Suffix-*' },
     dist          => { COMPRESS => 'gzip -9f', SUFFIX => '.gz', },
+    clean         => { FILES => 'Tree-Suffix-*' },
 );

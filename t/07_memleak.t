@@ -2,27 +2,26 @@ use strict;
 use Test::More;
 use Tree::Suffix;
 
-unless (mem()) {
-    plan skip_all => 'Unable to determine memory usage via `ps` command';
+unless (eval { require Proc::ProcessTable } ) {
+    plan skip_all => 'Proc::ProcessTable is not installed';
 }
 
 plan tests => 2;
 
-sub mem {
-    my $mem = (`ps -p $$ -o rss`)[1];
-    $mem =~ s/^\s*|\s*$//g;
-    return $mem;
+my $p = Proc::ProcessTable->new;
+for (@{$p->table}) {
+    $p = $_ and last if $_->pid == $$;
 }
 
 {
     my $tree = Tree::Suffix->new();
     $tree->insert('aa'..'gg');
-    my $start = mem;
+    my $start = $p->rss;
     for (my $i=0; $i<200; $i++) {
         $tree->clear;
         $tree->insert('aa'..'gg');
     }
-    my $end = mem;
+    my $end = $p->rss;
     if ($end - $start > 1_000) {
         diag("\nMemory: $start -> $end\nVerify that you have libstree >= 0.4.2");
         ok(0, 'insert()');
@@ -35,12 +34,12 @@ sub mem {
 {
     my $tree = Tree::Suffix->new();
     $tree->insert('aa'..'gg');
-    my $start = mem;
+    my $start = $p->rss;
     for (my $i=0; $i<200; $i++) {
         $tree = Tree::Suffix->new();
         $tree->insert('aa'..'gg');
     }
-    my $end = mem;
+    my $end = $p->rss;
     if ($end - $start > 1_000) {
         diag("\nMemory: $start -> $end\nVerify that you have libstree >= 0.4.2");
         ok(0, 'new()/insert()');

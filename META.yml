@@ -1,9 +1,9 @@
 --- #YAML:1.0
 name:                Tree-Suffix
-version:             0.16
+version:             0.17
 abstract:            Perl interface to the libstree library.
 license:             ~
-generated_by:        ExtUtils::MakeMaker version 6.32
+generated_by:        ExtUtils::MakeMaker version 6.36
 distribution_type:   module
 requires:     
     Test::More:                    0
