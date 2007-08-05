@@ -15,10 +15,11 @@ t/06_remove.t
 t/07_memleak.t
 t/08_find.t
 t/09_duplicates.t
-t/10_pod.t
-t/11_pod_coverage.t
-t/12_string.t
-t/13_memleak.t
-t/14_index_vs_id.t
+t/10_string.t
+t/11_memleak.t
+t/12_index_vs_id.t
+t/99_kwalitee.t
+t/99_pod.t
+t/99_pod_coverage.t
 typemap
 META.yml                                 Module meta-data (added by MakeMaker)

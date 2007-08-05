@@ -2,7 +2,7 @@ package Tree::Suffix;
 
 use strict;
 
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 
 eval {
     require XSLoader;
@@ -68,80 +68,80 @@ which implements generic suffix trees.
 
 =over 4
 
-=item $tree = Tree::Suffix->new
+=item $tree = Tree::Suffix->B<new>
 
-=item $tree = Tree::Suffix->new(@strings)
+=item $tree = Tree::Suffix->B<new>( @strings )
 
 Creates a new Tree::Suffix object. The constructor will accept a list of
 strings to be inserted into the tree.
 
-=item $tree->allow_duplicates($bool)
+=item $tree->B<allow_duplicates>( $bool )
 
 Determines whether duplicate strings are permitted in the tree.  By default,
 duplicates are allowed.  Note, this must be called before strings are inserted
 for it to have an effect.  Returns the value of the flag.
 
-=item $tree->insert(@strings)
+=item $tree->B<insert>( @strings )
 
 Inserts the list of strings into the tree, excluding duplicates if they are
 not allowed.  Returns the number of successfull insertions.
 
-=item $tree->remove(@strings)
+=item $tree->B<remove>( @strings )
 
 Remove the list of strings from the tree, including duplicates if they are
 allowed.  Returns the number of successful removals.
 
-=item $tree->find($string)
+=item $tree->B<find>( $string )
 
-=item $tree->match($string)
+=item $tree->B<match>( $string )
 
-=item $tree->search($string)
+=item $tree->B<search>( $string )
 
 In scalar context, returns the number of occurrences of the substring in the
 tree.  In list context, returns the positions of all occurrences of the given
 string as a list of array references in the form [string_index, start, end].
 
-=item $tree->string(string_index)
+=item $tree->B<string>( $string_index )
 
-=item $tree->string(string_index, start)
+=item $tree->B<string>( $string_index, $start )
 
-=item $tree->string(string_index, start, end)
+=item $tree->B<string>( $string_index, $start, $end )
 
 Returns the string at index_id.  The start and end positions may be specified
 to return a substring.
 
-=item $tree->lcs
+=item $tree->B<lcs>
 
-=item $tree->lcs($min_len, $max_len)
+=item $tree->B<lcs>( $min_len, $max_len )
 
-=item $tree->longest_common_substrings
+=item $tree->B<longest_common_substrings>
 
 Returns a list of the longest common substrings. The minimum and maximum 
 length of the considered substrings may be specified.
 
-=item $tree->lrs
+=item $tree->B<lrs>
 
-=item $tree->lrs($min_len, $max_len)
+=item $tree->B<lrs>( $min_len, $max_len )
 
-=item $tree->longest_repeated_substrings
+=item $tree->B<longest_repeated_substrings>
 
 Returns a list of the longest repeated substrings. The minimum and maximum
 length of the considered substrings may be specified.
 
-=item $tree->strings
+=item $tree->B<strings>
 
 In scalar context, returns the total number of strings in the tree.  In list
 context, returns the list of string indexes.
 
-=item $tree->nodes
+=item $tree->B<nodes>
 
 Returns the total number of nodes in the tree.
 
-=item $tree->clear
+=item $tree->B<clear>
 
 Removes all strings from the tree.
 
-=item $tree->dump
+=item $tree->B<dump>
 
 Prints a representation of the tree to STDOUT.
 

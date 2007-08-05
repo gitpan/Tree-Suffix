@@ -8,6 +8,7 @@ my $inc  = join ' ', grep { defined } @ENV{qw(CFLAGS CXXFLAGS CPPFLAGS)};
 WriteMakefile(
     NAME          => 'Tree::Suffix',
     AUTHOR        => 'gray <gray@cpan.org>',
+    LICENSE       => 'perl',
     VERSION_FROM  => 'lib/Tree/Suffix.pm',
     ABSTRACT_FROM => 'lib/Tree/Suffix.pm',
     PREREQ_PM     => { 'Test::More' => 0 },

@@ -8,18 +8,23 @@ INSTALLATION
 
 To install this module type the following:
 
-   perl Makefile.PL
-   make
-   make test
-   make install
+    perl Makefile.PL
+    make
+    make test
+    make install
 
 DEPENDENCIES
 
+This module requires these other modules and libraries:
+
+    libstree from http://www.icir.org/christian/libstree/
+    Test::More
+
 A C compiler is required to build this module.
 
-The libstree library must already be installed. If the library is installed in 
-a non-standard location (like your home directory), be sure to pass in the
-appropriate flags to direct the compiler to its location, like so:
+If libstree is installed in a non-standard location (like your home 
+directory), be sure to pass in the appropriate flags to direct the compiler to 
+its location, like so:
     perl Makefile.PL INC=-I/home/user/include LIBS="-L/home/user/lib -lstree"
 
 NOTES
