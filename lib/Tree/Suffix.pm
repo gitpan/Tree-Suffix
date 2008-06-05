@@ -2,7 +2,7 @@ package Tree::Suffix;
 
 use strict;
 
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 eval {
     require XSLoader;
@@ -29,7 +29,7 @@ Tree::Suffix - Perl interface to the libstree library.
     $tree = Tree::Suffix->new(@strings);
 
     $bool = $tree->allow_duplicates($bool);
-  
+
     $count = $tree->insert(@strings);
     $count = $tree->remove(@strings);
 
@@ -66,7 +66,7 @@ which implements generic suffix trees.
 
 =head1 METHODS
 
-=over 4
+=over
 
 =item $tree = Tree::Suffix->B<new>
 
@@ -116,7 +116,7 @@ to return a substring.
 
 =item $tree->B<longest_common_substrings>
 
-Returns a list of the longest common substrings. The minimum and maximum 
+Returns a list of the longest common substrings. The minimum and maximum
 length of the considered substrings may be specified.
 
 =item $tree->B<lrs>
@@ -178,9 +178,9 @@ A memory leak will be exhibited if you are using a version of libstree < .4.2.
 When reporting a bug, first verify that you can successfully run the tests in
 the libstree distribution.
 
-Please report any bugs or feature requests to 
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tree-Suffix>. I will be 
-notified, and then you'll automatically be notified of progress on your bug as 
+Please report any bugs or feature requests to
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tree-Suffix>. I will be
+notified, and then you'll automatically be notified of progress on your bug as
 I make changes.
 
 =head1 SUPPORT
@@ -191,7 +191,7 @@ You can find documentation for this module with the perldoc command.
 
 You can also look for information at:
 
-=over 4
+=over
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
@@ -215,7 +215,7 @@ L<http://search.cpan.org/dist/Tree-Suffix>
 
 Copyright (C) 2006-2007 gray <gray at cpan.org>, all rights reserved.
 
-This library is free software; you can redistribute it and/or modify it under 
+This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
 
 =head1 AUTHOR

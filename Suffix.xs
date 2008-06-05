@@ -9,10 +9,10 @@ int
 redirect_stderr () {
     return dup2(fileno(stdout), fileno(stderr));
 }
- 
+
 void
 restore_stderr (int old) {
-    if (old != -1) dup2(old, fileno(stderr));     
+    if (old != -1) dup2(old, fileno(stderr));
 }
 
 LST_Node *
@@ -153,7 +153,7 @@ PREINIT:
     IV fn;
 CODE:
     /* Redirect from stderr to stdout */
-    fn = redirect_stderr();    
+    fn = redirect_stderr();
     lst_debug_print_tree(self);
     restore_stderr(fn);
 
@@ -302,7 +302,7 @@ CODE:
     if (! hi) {
         XSRETURN_NO;
     }
- 
+
     lst_string_index_init(&range);
     range.string = hi->string;
 

@@ -2,6 +2,9 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+# Eventually use Devel::CheckLib
+exit if $ENV{AUTOMATED_TESTING};
+
 my $libs = join ' ', grep { defined } @ENV{qw(LDFLAGS LD_LIBRARY_PATH)};
 my $inc  = join ' ', grep { defined } @ENV{qw(CFLAGS CXXFLAGS CPPFLAGS)};
 

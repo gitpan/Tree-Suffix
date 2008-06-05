@@ -29,6 +29,6 @@ is_deeply([$tree->find('virus')], [], 'no match in list context');
 sub sort_arefs {
     map  { $_->[0] }
     sort { $a->[1] cmp $b->[1] }
-    map  { [$_, join(' ', @$_)] } 
+    map  { [$_, join(' ', @$_)] }
     @_;
 }
