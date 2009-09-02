@@ -1,16 +1,18 @@
 package Tree::Suffix;
 
 use strict;
+use warnings;
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
+$VERSION = eval $VERSION;
 
 eval {
     require XSLoader;
-    XSLoader::load( __PACKAGE__, $VERSION );
+    XSLoader::load(__PACKAGE__, $VERSION);
     1;
 } or do {
     require DynaLoader;
-    DynaLoader::bootstrap( __PACKAGE__, $VERSION );
+    DynaLoader::bootstrap(__PACKAGE__, $VERSION);
 };
 
 1;
@@ -70,49 +72,49 @@ which implements generic suffix trees.
 
 =item $tree = Tree::Suffix->B<new>
 
-=item $tree = Tree::Suffix->B<new>( @strings )
+=item $tree = Tree::Suffix->B<new>(@strings)
 
 Creates a new Tree::Suffix object. The constructor will accept a list of
 strings to be inserted into the tree.
 
-=item $tree->B<allow_duplicates>( $bool )
+=item $tree->B<allow_duplicates>($bool)
 
 Determines whether duplicate strings are permitted in the tree.  By default,
 duplicates are allowed.  Note, this must be called before strings are inserted
 for it to have an effect.  Returns the value of the flag.
 
-=item $tree->B<insert>( @strings )
+=item $tree->B<insert>(@strings)
 
 Inserts the list of strings into the tree, excluding duplicates if they are
 not allowed.  Returns the number of successfull insertions.
 
-=item $tree->B<remove>( @strings )
+=item $tree->B<remove>(@strings)
 
 Remove the list of strings from the tree, including duplicates if they are
 allowed.  Returns the number of successful removals.
 
-=item $tree->B<find>( $string )
+=item $tree->B<find>($string)
 
-=item $tree->B<match>( $string )
+=item $tree->B<match>($string)
 
-=item $tree->B<search>( $string )
+=item $tree->B<search>($string)
 
 In scalar context, returns the number of occurrences of the substring in the
 tree.  In list context, returns the positions of all occurrences of the given
 string as a list of array references in the form [string_index, start, end].
 
-=item $tree->B<string>( $string_index )
+=item $tree->B<string>($string_index)
 
-=item $tree->B<string>( $string_index, $start )
+=item $tree->B<string>($string_index, $start)
 
-=item $tree->B<string>( $string_index, $start, $end )
+=item $tree->B<string>($string_index, $start, $end)
 
 Returns the string at index_id.  The start and end positions may be specified
 to return a substring.
 
 =item $tree->B<lcs>
 
-=item $tree->B<lcs>( $min_len, $max_len )
+=item $tree->B<lcs>($min_len, $max_len)
 
 =item $tree->B<longest_common_substrings>
 
@@ -121,7 +123,7 @@ length of the considered substrings may be specified.
 
 =item $tree->B<lrs>
 
-=item $tree->B<lrs>( $min_len, $max_len )
+=item $tree->B<lrs>($min_len, $max_len)
 
 =item $tree->B<longest_repeated_substrings>
 
@@ -179,7 +181,7 @@ When reporting a bug, first verify that you can successfully run the tests in
 the libstree distribution.
 
 Please report any bugs or feature requests to
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tree-Suffix>. I will be
+L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Tree-Suffix>. I will be
 notified, and then you'll automatically be notified of progress on your bug as
 I make changes.
 
@@ -193,6 +195,10 @@ You can also look for information at:
 
 =over
 
+=item * GitHub Source Repository
+
+L<http://github.com/gray/tree-suffix>
+
 =item * AnnoCPAN: Annotated CPAN documentation
 
 L<http://annocpan.org/dist/Tree-Suffix>
@@ -203,7 +209,7 @@ L<http://cpanratings.perl.org/d/Tree-Suffix>
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Tree-Suffix>
+L<http://rt.cpan.org/Public/Dist/Display.html?Dist=Tree-Suffix>
 
 =item * Search CPAN
 

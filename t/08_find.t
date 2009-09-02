@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 12;
+use Test::More tests => 14;
 use Tree::Suffix;
 
 my $tree = Tree::Suffix->new(qw(string stringy astring astringy));
@@ -24,6 +24,14 @@ is_deeply(
     [[0, 0, 2], [0, 6, 8], [1, 1, 3], [2, 5, 7]], 'list context'
 );
 is_deeply([$tree->find('virus')], [], 'no match in list context');
+
+TODO: {
+    local $TODO = 'RT #43650 is still unsolved';
+
+    $tree = Tree::Suffix->new('(IBAAR)(IBABR)(IBAR)');
+    is($tree->find('IBR'), 0, 'RT #43650 - scalar');
+    is_deeply([$tree->find('IBR')], [], 'RT #43650 - list');
+}
 
 
 sub sort_arefs {

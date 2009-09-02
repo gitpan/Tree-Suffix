@@ -1,6 +1,10 @@
+#define PERL_NO_GET_CONTEXT
+
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+#define NEED_newRV_noinc
+#define NEED_sv_2pv_flags
 #include "ppport.h"
 
 #include <libstree.h>
@@ -19,8 +23,8 @@ LST_Node *
 follow_string (LST_STree *tree, LST_String *string) {
     LST_Node *node = tree->root_node;
     LST_Edge *edge = NULL;
-    u_int todo = 0, done = 0, len, common;
-    todo = string->num_items;
+    u_int done = 0, len, common;
+    u_int todo = string->num_items;
 
     while (todo > 0) {
         for (edge = node->kids.lh_first; edge; edge = edge->siblings.le_next) {
@@ -46,7 +50,7 @@ follow_string (LST_STree *tree, LST_String *string) {
     return (done < string->num_items - 1) ? NULL : node;
 }
 
-typedef LST_STree * Tree__Suffix;
+typedef LST_STree *Tree__Suffix;
 
 MODULE = Tree::Suffix  PACKAGE = Tree::Suffix
 
